@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+src/SyNBEATS/__init__.py
+src/SyNBEATS/main_module.py
+src/SyNBEATS.egg-info/PKG-INFO
+src/SyNBEATS.egg-info/SOURCES.txt
+src/SyNBEATS.egg-info/dependency_links.txt
+src/SyNBEATS.egg-info/requires.txt
+src/SyNBEATS.egg-info/top_level.txt

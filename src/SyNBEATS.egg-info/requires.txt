@@ -1,0 +1,5 @@
+darts==0.25.0
+pandas
+torch==2.0.1
+matplotlib
+numpy==1.24.4

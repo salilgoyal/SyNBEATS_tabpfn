@@ -1,0 +1,12 @@
+/var/spool/slurmd/job10022583/slurm_script: line 37: cd: tabpfn/: No such file or directory
+Processing states:   0%|          | 0/39 [00:00<?, ?it/s]Processing states:   0%|          | 0/39 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/users/salilg/SyNBEATS_tabpfn/tabpfn/run_tabpfn_predictions_synbeats.py", line 382, in <module>
+    main()
+  File "/home/users/salilg/SyNBEATS_tabpfn/tabpfn/run_tabpfn_predictions_synbeats.py", line 366, in main
+    predictions_dict, dta_dict = run_tabpfn_predictions_synbeats(
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/users/salilg/SyNBEATS_tabpfn/tabpfn/run_tabpfn_predictions_synbeats.py", line 252, in run_tabpfn_predictions_synbeats
+    X_train = np.asarray(X_train, dtype=float)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 1 dimensions. The detected shape was (14,) + inhomogeneous part.

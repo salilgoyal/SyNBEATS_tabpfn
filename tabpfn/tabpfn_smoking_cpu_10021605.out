@@ -1,0 +1,29 @@
+==========================================
+Job ID: 10021605
+Job Name: tabpfn_smoking_cpu
+Node: sh03-11n12
+Start Time: Tue Nov 18 15:17:05 PST 2025
+Working Directory: /home/users/salilg/SyNBEATS_tabpfn/tabpfn
+Device Type: CPU
+==========================================
+
+Python version:
+Python 3.12.1
+
+Number of CPUs: 8
+
+==========================================
+Running TabPFNv2 predictions on CPU...
+Output will be saved to: tabpfn_predictions_cpu_20251118_151706.csv
+==========================================
+
+Using device: GPU (if available)
+Loading data from: ../smoking_data.csv
+Loaded 1209 observations
+
+Training on years 1970-1983
+Predicting years 1984-2000
+Number of states: 39
+Excluding treated state (id=3)
+Past lags (w): 5, Future lookahead (r): 5
+

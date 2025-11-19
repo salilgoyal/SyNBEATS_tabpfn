@@ -165,6 +165,9 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
     """
     Run TabPFNv2 predictions using synbeats-style features.
 
+    This version uses the synbeats features for the target state only,
+    combined with raw values from control states in windows (similar to basic approach).
+
     Parameters:
     -----------
     dta : pd.DataFrame
@@ -212,41 +215,37 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
         )
 
         # --------- Build train set ----------
-        # Get features for control states in windows + target state's pre-period
         X_train, y_train = [], []
 
         for year in range(pre_start, pre_end + 1):
-            # Get target state's observation for this year
+            # Get target state's synbeats features for this year
             target_row = feature_df[
                 (feature_df['id'] == target_state) &
                 (feature_df['time'] == year)
             ]
 
-            if len(target_row) == 0:
+            if len(target_row) == 0 or target_row[feature_cols].isna().any().any():
                 continue
 
             y_train.append(float(target_row['Y_obs'].iloc[0]))
 
-            # Build features from control states in [year-w, year+r] window
-            # and target state's own lags
-            control_features = feature_df[
-                (~feature_df['id'].isin(exclude_list)) &
-                (feature_df['time'] >= year - w) &
-                (feature_df['time'] <= year + r)
-            ][feature_cols].values.flatten()
+            # Use synbeats features for target state
+            target_features = target_row[feature_cols].values.flatten()
 
-            # Get target state's past lags
-            target_past = feature_df[
-                (feature_df['id'] == target_state) &
-                (feature_df['time'] >= year - w) &
-                (feature_df['time'] < year)
-            ][feature_cols].values.flatten()
+            # Add raw values from control states in window [year-w, year+r]
+            control_raw = []
+            for j in state_ids:
+                if j in exclude_list:
+                    continue
+                for y in range(year - w, year + r + 1):
+                    control_raw.append(dta_dict.get((j, y), np.nan))
 
-            # Combine features
-            feat = np.concatenate([control_features, target_past])
+            # Combine: synbeats features + control state raw values
+            feat = np.concatenate([target_features, control_raw])
             X_train.append(feat)
 
         if len(X_train) == 0:
+            print(f"Warning: No training data for state {target_state}, skipping")
             continue
 
         X_train = np.asarray(X_train, dtype=float)
@@ -258,29 +257,32 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
 
         # --------- Predict post-period ----------
         for year in range(post_start, post_end + 1):
-            # Build features for prediction year
-            control_features = feature_df[
-                (~feature_df['id'].isin(exclude_list)) &
-                (feature_df['time'] >= year - w) &
-                (feature_df['time'] <= year + r)
-            ][feature_cols].values.flatten()
-
-            target_past = feature_df[
+            # Get target state's synbeats features for prediction year
+            target_row = feature_df[
                 (feature_df['id'] == target_state) &
-                (feature_df['time'] >= year - w) &
-                (feature_df['time'] < year)
-            ][feature_cols].values.flatten()
+                (feature_df['time'] == year)
+            ]
 
-            feat = np.concatenate([control_features, target_past])
+            if len(target_row) == 0:
+                continue
+
+            target_features = target_row[feature_cols].values.flatten()
+
+            # Add raw values from control states in window
+            control_raw = []
+            for j in state_ids:
+                if j in exclude_list:
+                    continue
+                for y in range(year - w, year + r + 1):
+                    control_raw.append(dta_dict.get((j, y), np.nan))
+
+            feat = np.concatenate([target_features, control_raw])
 
             # Ensure feature dimension matches training
             if len(feat) != X_train.shape[1]:
-                # Pad or truncate if necessary
-                if len(feat) < X_train.shape[1]:
-                    feat = np.pad(feat, (0, X_train.shape[1] - len(feat)),
-                                 constant_values=np.nan)
-                else:
-                    feat = feat[:X_train.shape[1]]
+                print(f"Warning: Feature dimension mismatch for state {target_state}, year {year}")
+                print(f"Expected {X_train.shape[1]}, got {len(feat)}")
+                continue
 
             yhat = float(model.predict(np.asarray([feat], dtype=float))[0])
             predictions_dict[(target_state, year)] = yhat

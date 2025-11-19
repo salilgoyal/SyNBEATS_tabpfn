@@ -1,0 +1,35 @@
+==========================================
+Job ID: 10026294
+Job Name: tabpfn_synbeats_cpu
+Node: sh03-11n12
+Start Time: Tue Nov 18 16:01:14 PST 2025
+Working Directory: /home/users/salilg/SyNBEATS_tabpfn/tabpfn
+Device Type: CPU
+Feature Type: Synbeats-style
+==========================================
+
+Python version:
+Python 3.12.1
+
+Number of CPUs: 8
+
+==========================================
+Running TabPFNv2 predictions with synbeats features on CPU...
+Output will be saved to: tabpfn_predictions_synbeats_cpu_20251118_160115.csv
+==========================================
+
+Using device: GPU (if available)
+Loading data from: ../smoking_data.csv
+Loaded 1209 observations
+
+Training on years 1970-1983
+Predicting years 1984-2000
+Number of states: 39
+Excluding treated state (id=3)
+Using synbeats-style features with 2 PCA components
+
+
+==========================================
+Job failed with error code 0
+End Time: Tue Nov 18 16:01:27 PST 2025
+==========================================

@@ -33,9 +33,6 @@ python3 --version
 echo ""
 echo "Number of CPUs: $SLURM_CPUS_PER_TASK"
 
-# Navigate to the script directory
-cd tabpfn/
-
 # Force CPU usage by setting environment variable
 export CUDA_VISIBLE_DEVICES=""
 
@@ -48,6 +45,7 @@ echo ""
 echo "=========================================="
 echo "Running TabPFNv2 predictions with synbeats features on CPU..."
 echo "Output will be saved to: $OUTPUT_FILE"
+echo "Note: Running from $(pwd)"
 echo "=========================================="
 echo ""
 

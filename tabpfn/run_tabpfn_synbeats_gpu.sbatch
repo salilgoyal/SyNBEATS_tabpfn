@@ -4,7 +4,7 @@
 #SBATCH --error=tabpfn_synbeats_gpu_%j.err
 #SBATCH --time=4:00:00
 #SBATCH --mem=32GB
-#SBATCH --partition=gpu
+#SBATCH --partition=deho
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 
@@ -21,11 +21,11 @@ echo "=========================================="
 
 # Load any required modules (adjust based on your cluster)
 # Example:
-# module load python/3.9
-# module load cuda/11.8
+module load python/3.12.1
+module load cuda/11.8
 
 # Activate virtual environment if needed
-# source /path/to/your/venv/bin/activate
+source /scratch/users/salilg/envs/tabpfn_env/.venv/bin/activate
 
 # Print Python and GPU information
 echo ""
@@ -36,9 +36,6 @@ echo ""
 echo "GPU information:"
 nvidia-smi || echo "nvidia-smi not available"
 
-# Navigate to the script directory
-cd tabpfn/
-
 # Set output filename with timestamp
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 OUTPUT_FILE="tabpfn_predictions_synbeats_gpu_${TIMESTAMP}.csv"
@@ -48,6 +45,7 @@ echo ""
 echo "=========================================="
 echo "Running TabPFNv2 predictions with synbeats features on GPU..."
 echo "Output will be saved to: $OUTPUT_FILE"
+echo "Note: Running from $(pwd)"
 echo "=========================================="
 echo ""
 

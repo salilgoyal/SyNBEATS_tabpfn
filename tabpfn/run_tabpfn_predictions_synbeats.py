@@ -224,13 +224,18 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
                 (feature_df['time'] == year)
             ]
 
-            if len(target_row) == 0 or target_row[feature_cols].isna().any().any():
+            if len(target_row) == 0:
                 continue
 
             y_train.append(float(target_row['Y_obs'].iloc[0]))
 
-            # Use synbeats features for target state
-            target_features = target_row[feature_cols].values.flatten()
+            # Extract synbeats features, replacing any NaN with 0
+            target_features = []
+            for col in feature_cols:
+                val = target_row[col].iloc[0] if col in target_row.columns else np.nan
+                target_features.append(0.0 if pd.isna(val) else float(val))
+
+            target_features = np.array(target_features, dtype=float)
 
             # Add raw values from control states in window [year-w, year+r]
             control_raw = []
@@ -240,12 +245,21 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
                 for y in range(year - w, year + r + 1):
                     control_raw.append(dta_dict.get((j, y), np.nan))
 
+            control_raw = np.array(control_raw, dtype=float)
+
             # Combine: synbeats features + control state raw values
             feat = np.concatenate([target_features, control_raw])
             X_train.append(feat)
 
         if len(X_train) == 0:
             print(f"Warning: No training data for state {target_state}, skipping")
+            continue
+
+        # Check that all feature vectors have the same length
+        feat_lengths = [len(f) for f in X_train]
+        if len(set(feat_lengths)) > 1:
+            print(f"Error: Inconsistent feature lengths for state {target_state}: {set(feat_lengths)}")
+            print(f"Feature lengths: {feat_lengths}")
             continue
 
         X_train = np.asarray(X_train, dtype=float)
@@ -266,7 +280,13 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
             if len(target_row) == 0:
                 continue
 
-            target_features = target_row[feature_cols].values.flatten()
+            # Extract synbeats features, replacing any NaN with 0
+            target_features = []
+            for col in feature_cols:
+                val = target_row[col].iloc[0] if col in target_row.columns else np.nan
+                target_features.append(0.0 if pd.isna(val) else float(val))
+
+            target_features = np.array(target_features, dtype=float)
 
             # Add raw values from control states in window
             control_raw = []
@@ -275,6 +295,8 @@ def run_tabpfn_predictions_synbeats(dta, treated_id=3, n_pcs=2):
                     continue
                 for y in range(year - w, year + r + 1):
                     control_raw.append(dta_dict.get((j, y), np.nan))
+
+            control_raw = np.array(control_raw, dtype=float)
 
             feat = np.concatenate([target_features, control_raw])
 

@@ -27,3 +27,12 @@ Number of states: 39
 Excluding treated state (id=3)
 Past lags (w): 5, Future lookahead (r): 5
 
+
+Results saved to: tabpfn_predictions_cpu_20251118_151706.csv
+Output shape: (1178, 5)
+
+==========================================
+Job completed successfully!
+Output file: tabpfn_predictions_cpu_20251118_151706.csv
+End Time: Tue Nov 18 15:49:28 PST 2025
+==========================================

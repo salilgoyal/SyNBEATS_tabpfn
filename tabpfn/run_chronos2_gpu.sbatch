@@ -21,11 +21,11 @@ echo "=========================================="
 
 # Load any required modules (adjust based on your cluster)
 # Example:
-# module load python/3.12.1
-# module load cuda/11.8
+module load python/3.12.1
+module load cuda/11.8
 
 # Activate virtual environment if needed
-# source /path/to/your/venv/bin/activate
+source /scratch/users/salilg/envs/chronos_env/.venv/bin/activate
 
 # Print Python and GPU information
 echo ""

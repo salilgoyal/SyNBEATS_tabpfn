@@ -1,0 +1,87 @@
+==========================================
+Job ID: 10102377
+Job Name: chronos2_smoking_gpu
+Node: sh03-11n12
+Start Time: Wed Nov 19 14:04:00 PST 2025
+Working Directory: /home/users/salilg/SyNBEATS_tabpfn/tabpfn
+Device Type: GPU
+Model: Chronos-2
+==========================================
+
+Python version:
+Python 3.12.1
+
+GPU information:
+Wed Nov 19 14:04:03 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-80GB          On  |   00000000:41:00.0 Off |                    0 |
+| N/A   29C    P0             60W /  500W |       1MiB /  81920MiB |      0%   E. Process |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+HF_HOME set to: /scratch/users/salilg/huggingface_cache
+
+==========================================
+Running Chronos-2 predictions on GPU...
+Note: Running from /home/users/salilg/SyNBEATS_tabpfn/tabpfn
+Models will be cached in: /scratch/users/salilg/huggingface_cache
+==========================================
+
+Using device: GPU (CUDA)
+
+Loading Chronos-2 model: amazon/chronos-2
+This may take a few minutes on first run...
+Model loaded successfully!
+
+Loading data from: ../smoking_data.csv
+Loaded 1209 observations
+
+============================================================
+Running Variant B
+============================================================
+
+=== VARIANT B: With Panel Covariates ===
+Training on years 1970-1983
+Predicting years 1984-2000
+
+Results saved to: ./chronos2_predictions_variant_b.csv
+Output shape: (1178, 5)
+
+Sample predictions for year 1989:
+     id  year   predicted         obs        gap
+19    1  1989   91.506729  105.599998  14.093269
+50    2  1989  116.206924  118.300003   2.093079
+81    4  1989  119.593933   88.800003 -30.793930
+112   5  1989  112.424530  100.599998 -11.824532
+143   6  1989  149.536896  131.699997 -17.836899
+174   7  1989  111.642776  117.099998   5.457222
+205   8  1989  100.265099   78.400002 -21.865097
+236   9  1989  115.680733  104.599998 -11.080734
+267  10  1989  121.620300  132.500000  10.879700
+298  11  1989  100.536507   94.400002  -6.136505
+
+Post-period summary (1984-2000):
+Mean absolute gap: 13.99
+RMSE: 19.23
+
+============================================================
+All variants completed!
+============================================================
+
+==========================================
+Job completed successfully!
+End Time: Wed Nov 19 14:04:53 PST 2025
+==========================================

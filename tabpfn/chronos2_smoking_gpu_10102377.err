@@ -1,0 +1,13 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"cuda/11.8"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "cuda/11.8"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+Variant B:   0%|          | 0/39 [00:00<?, ?it/s]Variant B:   3%|▎         | 1/39 [00:01<00:48,  1.28s/it]Variant B:  10%|█         | 4/39 [00:01<00:09,  3.50it/s]Variant B:  15%|█▌        | 6/39 [00:01<00:06,  5.18it/s]Variant B:  21%|██        | 8/39 [00:01<00:04,  6.78it/s]Variant B:  26%|██▌       | 10/39 [00:01<00:03,  8.28it/s]Variant B:  31%|███       | 12/39 [00:02<00:02,  9.30it/s]Variant B:  36%|███▌      | 14/39 [00:02<00:02, 10.50it/s]Variant B:  41%|████      | 16/39 [00:02<00:02, 11.08it/s]Variant B:  46%|████▌     | 18/39 [00:02<00:01, 11.71it/s]Variant B:  51%|█████▏    | 20/39 [00:02<00:01, 12.19it/s]Variant B:  56%|█████▋    | 22/39 [00:02<00:01, 12.79it/s]Variant B:  62%|██████▏   | 24/39 [00:02<00:01, 13.40it/s]Variant B:  67%|██████▋   | 26/39 [00:03<00:00, 13.58it/s]Variant B:  72%|███████▏  | 28/39 [00:03<00:00, 13.68it/s]Variant B:  77%|███████▋  | 30/39 [00:03<00:00, 13.98it/s]Variant B:  82%|████████▏ | 32/39 [00:03<00:00, 13.55it/s]Variant B:  87%|████████▋ | 34/39 [00:03<00:00, 13.45it/s]Variant B:  92%|█████████▏| 36/39 [00:03<00:00, 13.49it/s]Variant B:  97%|█████████▋| 38/39 [00:03<00:00, 13.42it/s]Variant B: 100%|██████████| 39/39 [00:04<00:00,  9.72it/s]

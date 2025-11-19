@@ -4,7 +4,7 @@
 #SBATCH --error=chronos2_smoking_gpu_%j.err
 #SBATCH --time=2:00:00
 #SBATCH --mem=32GB
-#SBATCH --partition=gpu
+#SBATCH --partition=deho
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=4
 

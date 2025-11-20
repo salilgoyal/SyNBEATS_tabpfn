@@ -4,7 +4,7 @@
 #SBATCH --error=chronos2_smoking_cpu_%j.err
 #SBATCH --time=4:00:00
 #SBATCH --mem=32GB
-#SBATCH --partition=normal
+#SBATCH --partition=deho
 #SBATCH --cpus-per-task=8
 
 # Print job information
@@ -20,10 +20,10 @@ echo "=========================================="
 
 # Load any required modules (adjust based on your cluster)
 # Example:
-# module load python/3.12.1
+module load python/3.12.1
 
 # Activate virtual environment if needed
-# source /path/to/your/venv/bin/activate
+source /scratch/users/salilg/envs/chronos_env/.venv/bin/activate
 
 # Print Python information
 echo ""

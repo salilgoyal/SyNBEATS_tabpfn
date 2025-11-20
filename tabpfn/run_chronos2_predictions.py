@@ -74,7 +74,14 @@ def compute_panel_statistics(dta, exclude_states):
     panel_data = dta[~dta['id'].isin(exclude_states)]
     stats = panel_data.groupby('time')['Y_obs'].agg([
         ('panel_mean', 'mean'),
-        ('panel_sd', 'std')
+        ('panel_sd', 'std'),
+        ('panel_median', 'median'),
+        ('panel_q25', lambda x: x.quantile(0.25)),
+        ('panel_q75', lambda x: x.quantile(0.75)),
+        ('panel_q10', lambda x: x.quantile(0.1)),
+        ('panel_q90', lambda x: x.quantile(0.9)),
+        ('panel_skewness', lambda x: x.skew()),
+        ('panel_kurtosis', lambda x: x.kurtosis()),
     ]).reset_index()
     return stats
 
@@ -160,12 +167,26 @@ def prepare_chronos_data_variant_b(dta, state_id, treated_id,
         "past_covariates": {
             "panel_mean": train_panel['panel_mean'].values,
             "panel_sd": train_panel['panel_sd'].values,
+            "panel_median": train_panel['panel_median'].values,
+            "panel_q25": train_panel['panel_q25'].values,
+            "panel_q75": train_panel['panel_q75'].values,
+            "panel_q10": train_panel['panel_q10'].values,
+            "panel_q90": train_panel['panel_q90'].values,
+            "panel_skewness": train_panel['panel_skewness'].values,
+            "panel_kurtosis": train_panel['panel_kurtosis'].values,
             "time_index": train_t.astype(float),
             "time_index_sq": train_t2.astype(float),
         },
         "future_covariates": {
             "panel_mean": future_panel['panel_mean'].values,
             "panel_sd": future_panel['panel_sd'].values,
+            "panel_median": future_panel['panel_median'].values,
+            "panel_q25": future_panel['panel_q25'].values,
+            "panel_q75": future_panel['panel_q75'].values,
+            "panel_q10": future_panel['panel_q10'].values,
+            "panel_q90": future_panel['panel_q90'].values,
+            "panel_skewness": future_panel['panel_skewness'].values,
+            "panel_kurtosis": future_panel['panel_kurtosis'].values,
             "time_index": future_t.astype(float),
             "time_index_sq": future_t2.astype(float),
         }
